@@ -4,12 +4,13 @@ window.addEventListener("contextmenu", handleContextMenu, false);
 
 //	Disable menu item if not a link?
 function handleContextMenu(event) {
-	// console.log("Contextual Menu");
+	console.log("Contextual Menu");
 	console.log( event.target.nodeName.toLowerCase() );
 	if ( event.target.nodeName.toLowerCase() != "a" ) {
 		//	Get disabling to work and add on/off preference for this feature
-		safari.self.tab.dispatchMessage("disable", true);
+		// safari.self.tab.dispatchMessage("disable", true);
 		safari.self.tab.dispatchMessage("getLink", document.URL);
+		console.log(document.URL);
 	} else {
 		safari.self.tab.dispatchMessage("getLink", event.target.href);
 		console.log(event.target.href);	//	For debugging
@@ -21,6 +22,7 @@ window.addEventListener("keydown", keyboardShortcut, false);
 
 //	Execute command on keyboard shortcut
 function keyboardShortcut() {
+	console.log("Keyboard Shorcut");
 	console.log(event.keyCode);
 	if ( event.target.nodeName.toLowerCase() !== "input" && event.altKey ) {
 		safari.self.tab.dispatchMessage("keyboardShortcut", event.keyCode);
@@ -38,7 +40,7 @@ safari.self.addEventListener("message", displayResults, false);
 //	Display results
 function displayResults(response) {
 	if (response.name === "displayResults" ) {
-		//	Handle different response codes here
+		// Handle different response codes here
 		results.style.top = "0px";	//	Reset display
 		results.innerHTML = "Saving...";
 		// console.log(response.message);
@@ -63,9 +65,5 @@ function displayResults(response) {
 
 function hideResults() {
 	results.style.top = "-50px";
-	setTimeout( "clearClassName()", 500 );
-}
-
-function clearClassName() {
-	results.className = "";	//	Clear class
+	setTimeout( "results.className = ''", 500 );
 }
