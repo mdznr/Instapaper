@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Send to Instapaper</title>
+	<script type="text/javascript" charset="utf-8">
+	
+	var code = safari.extension.settings.getItem('instapaperID');
+	code = "QMMUOk2ZEBse";
+		
+	function performCommand(event) {
+		if (event.command === "readLater") {
+			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("instapaperID", code);
+		}
+	}
+	
+	function handleContextualMenu(event) {
+		safari.self.tab.setContextMenuEventUserInfo(event, event.target.nodeName);
+	}
+	
+	function validateCommand(event) {
+		if ( event.target.nodeName == "IMG" ) {
+			alert("HI");
+			event.target.disabled = true;
+		}
+		// alert( event.userInfo );
+	}
+ 
+// if event handlers are in the global HTML page, register with application:
+safari.application.addEventListener("command", performCommand, true);
+safari.application.addEventListener("validate", validateCommand, true);
+safari.addEventListener("contextualMenu", handleContextualMenu, true);
+</script>
+</head>
+<body>
+</body>
+</html>
