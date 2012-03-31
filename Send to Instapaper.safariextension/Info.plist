@@ -9,7 +9,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Send to Instapaper</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.mdznr.instapaper</string>
+	<string>com.mattzanchelli.instapaper</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
@@ -54,7 +54,9 @@
 			<string>All</string>
 		</dict>
 	</dict>
+	<key>Update Manifest URL</key>
+	<string>http://mdznr.com/safariextensions/manifest.plist</string>
 	<key>Website</key>
-	<string>http://mdznr.com/</string>
+	<string>http://mdznr.com/safariextensions/</string>
 </dict>
 </plist>
