@@ -13,9 +13,9 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.2</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.2</string>
 	<key>Chrome</key>
 	<dict>
 		<key>Context Menu Items</key>
@@ -24,7 +24,7 @@
 				<key>Identifier</key>
 				<string>readLater</string>
 				<key>Title</key>
-				<string>Read Later</string>
+				<string>Send to Instapaper</string>
 			</dict>
 		</array>
 		<key>Global Page</key>

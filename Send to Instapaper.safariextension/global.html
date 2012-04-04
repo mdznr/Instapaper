@@ -4,31 +4,72 @@
 	<title>Send to Instapaper</title>
 	<script type="text/javascript" charset="utf-8">
 	
-	var code = safari.extension.settings.getItem('instapaperID');
-	code = "QMMUOk2ZEBse";
+	//	Known Bugs: //
+	//	sends last right-clicked link regardless of sending that link
+	//	Hide menu item if not on link
+	//	URLS with '+' in them don't like to work (Instapaper's end?)
+	//	Keyboard shortcut doesn't detect "Shift"
 		
-	function performCommand(event) {
-		if (event.command === "readLater") {
-			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("instapaperID", code);
+	var url = null;
+	
+	function grabLink(event) {
+		console.log(event.name);
+		if ( event.name === "getLink" ) {
+			// alert(encodeURI((event.message).replace('+', '+++')));
+			// url = encodeURI((event.message).replace('+', '+++'));
+			url = encodeURI(event.message);
 		}
 	}
-	
-	function handleContextualMenu(event) {
-		safari.self.tab.setContextMenuEventUserInfo(event, event.target.nodeName);
+		
+	function performCommand(event) {
+		if ( event.name === "keyboardShortcut" || event.command === "readLater" ) {
+			console.log("Sending to Instapaper...");
+			var rqst = new XMLHttpRequest();
+			rqst.onreadystatechange = function() {
+				if ( rqst.readyState == 4 ) {
+					if ( rqst.status == 200 || window.location.href.indexOf("http") == -1 ) {
+						document.getElementById("result").innerHTML = rqst.responseText;
+					}
+					else {
+						alert("An error has occurred making the request");
+					}
+				}
+			};
+			var username = encodeURIComponent(safari.extension.secureSettings.getItem("username"));
+			// alert(username);
+			// var username = "matt@thinksdifferent.com";
+			var password = encodeURIComponent(safari.extension.secureSettings.getItem("password"));
+			// alert(password);
+			// var password = "79ecdf3c86c46ef8";
+			alert("https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url);
+			rqst.open("GET", "https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url, true);
+			rqst.send(null);
+		}
 	}
 	
 	function validateCommand(event) {
-		if ( event.target.nodeName == "IMG" ) {
-			alert("HI");
-			event.target.disabled = true;
+		if ( event.target.nodeName != "a" ) {
+			// alert(event.target.nodeName);
+			// event.target.disabled = true;
 		}
-		// alert( event.userInfo );
+		else {
+			alert("hi");
+		}
+	}
+	
+	function disableItem(msg) {
+		if ( msg.name === "disable" ) {
+			event.target.disabled = true;
+			event.preventDefault();
+		}
 	}
  
 // if event handlers are in the global HTML page, register with application:
 safari.application.addEventListener("command", performCommand, true);
 safari.application.addEventListener("validate", validateCommand, true);
-safari.addEventListener("contextualMenu", handleContextualMenu, true);
+safari.application.addEventListener("message", performCommand, true);
+safari.application.addEventListener("message", disableItem, true);
+safari.application.addEventListener("message", grabLink, true);
 </script>
 </head>
 <body>

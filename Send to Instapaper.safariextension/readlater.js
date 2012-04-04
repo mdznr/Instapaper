@@ -1,4 +1,17 @@
 
+//	Listen for contextual menus
+window.addEventListener("contextmenu", handleContextMenu, false);
+
+//	Disable menu item if not a link?
+function handleContextMenu(event) {
+	if ( event.target.nodeName != "A" ) {
+		safari.self.tab.dispatchMessage("disable", true);
+	} else {
+		safari.self.tab.dispatchMessage("getLink", event.target.href);
+		console.log(event.target.href);	//	For debugging
+	}
+}
+
 //	Listen for keyboard commands
 window.addEventListener("keydown", keyboardShortcut, false);
 
@@ -6,27 +19,7 @@ window.addEventListener("keydown", keyboardShortcut, false);
 function keyboardShortcut() {
 	if ( event.target.nodeName.toLowerCase() !== 'input' ) {
 		if ( event.altKey && event.keyCode == "73" ) {	//	Shift + Alt (Option) + I
-			sendTo("QMMUOk2ZEBse");
+			safari.self.tab.dispatchMessage("keyboardShortcut", true);
 		}
-	}
-}
-
-safari.self.addEventListener( "message", run, false );
-
-function run(msg) {
-	sendTo(msg.message);	//	sendTo with code (msg.message)
-}
-
-function sendTo(code) {
-	var code = "QMMUOk2ZEBse";
-	var d = document, z = d.createElement('scr'+'ipt'), b = d.body, l = d.location;
-	try {
-		if (!b) throw(0);
-		d.title = '(Saving...) '+d.title;
-		z.setAttribute('src', l.protocol+'//www.instapaper.com/j/'+code+'?u='+encodeURIComponent(l.href)+'&t='+(new Date().getTime()));
-		b.appendChild(z);
-	}
-	catch(e) {
-		alert( 'Please wait until the page has loaded.' );
 	}
 }
