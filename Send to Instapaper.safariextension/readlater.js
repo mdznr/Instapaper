@@ -23,3 +23,33 @@ function keyboardShortcut() {
 		}
 	}
 }
+
+//	Create & Style results
+var results = document.createElement("div");
+results.setAttribute("id", "result");
+results.style.position = "fixed";
+results.style.top = "0px";
+results.style.margin = "auto";
+results.style.font = "Helvetica";	//	Y u no work!?
+document.body.insertBefore(results, document.body.firstChild);
+
+//	Listen for results
+safari.self.addEventListener("message", displayResults, false);
+
+//	Display results
+function displayResults(response) {
+	if (response.name === "displayResults" ) {
+		//	Handle different response codes here
+		if ( response.message == 200 || response.message == 201 ) {
+			results.innerHTML = "Successfully sent to Instapaper!";
+		} else if ( response.message == 403 ) {
+			results.innerHTML = "Invalid username or password.";
+		} else if ( response.message == 400 ) {
+			results.innerHTML = "Bad request or exceeded the rate limit. Check your Preferences.";
+		} else if ( response.message == 500 ) {
+			results.innerHTMl = "The service encountered an error. Please try again later.";
+		} else {
+			results.innerHTMl = "Unexpected error: " + response.message;
+		}
+	}
+}

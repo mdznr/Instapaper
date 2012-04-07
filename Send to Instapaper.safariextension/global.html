@@ -7,7 +7,7 @@
 	//	Known Bugs: //
 	//	sends last right-clicked link regardless of sending that link
 	//	Hide menu item if not on link
-	//	URLS with '+' in them don't like to work (Instapaper's end?)
+	//	URLS with '+' in them don't like to work (Instapaper's fault?)
 	//	Keyboard shortcut doesn't detect "Shift"
 		
 	var url = null;
@@ -25,25 +25,28 @@
 		if ( event.name === "keyboardShortcut" || event.command === "readLater" ) {
 			console.log("Sending to Instapaper...");
 			var rqst = new XMLHttpRequest();
-			rqst.onreadystatechange = function() {
-				if ( rqst.readyState == 4 ) {
-					if ( rqst.status == 200 || window.location.href.indexOf("http") == -1 ) {
-						document.getElementById("result").innerHTML = rqst.responseText;
-					}
-					else {
-						alert("An error has occurred making the request");
-					}
-				}
-			};
 			var username = encodeURIComponent(safari.extension.secureSettings.getItem("username"));
 			// alert(username);
 			// var username = "matt@thinksdifferent.com";
 			var password = encodeURIComponent(safari.extension.secureSettings.getItem("password"));
 			// alert(password);
 			// var password = "79ecdf3c86c46ef8";
-			alert("https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url);
+			console.log("https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url);
 			rqst.open("GET", "https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url, true);
 			rqst.send(null);
+			rqst.onreadystatechange = function() {
+				safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("displayResults", rqst.readyState);
+				if ( rqst.readyState == 4 ) {
+					if ( rqst.status == 200 || window.location.href.indexOf("http") == -1 ) {
+						console.log(rqst.responseText);
+						//	Send code to inject script to output on page
+						safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("displayResults", rqst.responseText);
+					}
+					else {
+						alert("An error has occurred making the request");
+					}
+				}
+			};
 		}
 	}
 	
