@@ -26,11 +26,7 @@ function keyboardShortcut() {
 
 //	Create & Style results
 var results = document.createElement("div");
-results.setAttribute("id", "result");
-results.style.position = "fixed";
-results.style.top = "0px";
-results.style.margin = "auto";
-results.style.font = "Helvetica";	//	Y u no work!?
+results.setAttribute("id", "sendToInstapaperResults");
 document.body.insertBefore(results, document.body.firstChild);
 
 //	Listen for results
@@ -40,16 +36,28 @@ safari.self.addEventListener("message", displayResults, false);
 function displayResults(response) {
 	if (response.name === "displayResults" ) {
 		//	Handle different response codes here
+		results.innerHTML = "Saving...";
+		results.style.display = "block";	//	Reset display
 		if ( response.message == 200 || response.message == 201 ) {
-			results.innerHTML = "Successfully sent to Instapaper!";
+			results.className = "success";
+			results.innerHTML = "Sent to Instapaper!";
 		} else if ( response.message == 403 ) {
+			results.className = "failed";
 			results.innerHTML = "Invalid username or password.";
 		} else if ( response.message == 400 ) {
+			results.className = "failed";
 			results.innerHTML = "Bad request or exceeded the rate limit. Check your Preferences.";
 		} else if ( response.message == 500 ) {
+			results.className = "failed";
 			results.innerHTMl = "The service encountered an error. Please try again later.";
 		} else {
+			results.className = "failed";
 			results.innerHTMl = "Unexpected error: " + response.message;
 		}
+		setTimeout( "hideResults()", 2500 );
 	}
+}
+
+function hideResults() {
+	results.style.display = "none";	//	display: hidden; doesn't like to work
 }
