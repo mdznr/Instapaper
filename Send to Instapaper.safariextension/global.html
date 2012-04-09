@@ -33,7 +33,8 @@
 			// alert(password);
 			// var password = "79ecdf3c86c46ef8";
 			console.log("https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url);
-			rqst.open("GET", "https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url, true);
+			// url = url.replace(' ', '+');
+			rqst.open("GET", "https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+encodeURIComponent(url), true);
 			rqst.send(null);
 			rqst.onreadystatechange = function() {
 				safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("displayResults", rqst.readyState);

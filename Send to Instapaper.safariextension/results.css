@@ -15,8 +15,8 @@
 		linear,
 		left bottom,
 		left top,
-		color-stop(0, rgb(30,92,155)),
-		color-stop(1, rgb(52,121,191))
+		color-stop(0, rgba(30,92,155,.975)),
+		color-stop(1, rgba(52,121,191,.975))
 	);
 	clear: none;
 	z-index: 3;
@@ -24,6 +24,7 @@
 	border-top: 1px solid #5886b7;
 	text-shadow: #2b598b 0 -1px 0;
 	vertical-align: middle;
+	box-shadow: 0px 0px 5px rgba(0,0,0,.75);
 }
 
 #sendToInstapaperResults.failed {
