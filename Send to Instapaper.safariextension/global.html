@@ -11,7 +11,7 @@
 	//	Keyboard shortcut doesn't detect "Shift"
 	//	Results do not show "Sending..."
 		
-	var url = null;
+	var url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
 	
 	function grabLink(event) {
 		console.log(event.name);
@@ -24,6 +24,9 @@
 		
 	function performCommand(event) {
 		if ( event.name === "keyboardShortcut" || event.command === "readLater" ) {
+			if ( event.name === "keyboardShortcut" ) {
+				url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
+			}
 			console.log("Sending to Instapaper...");
 			var rqst = new XMLHttpRequest();
 			var username = encodeURIComponent(safari.extension.secureSettings.getItem("username"));
