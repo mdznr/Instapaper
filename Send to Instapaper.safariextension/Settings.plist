@@ -26,5 +26,19 @@
 		<key>Type</key>
 		<string>TextField</string>
 	</dict>
+	<dict>
+		<key>Type</key>
+		<string>Separator</string>
+	</dict>
+	<dict>
+		<key>DefaultValue</key>
+		<string>i</string>
+		<key>Key</key>
+		<string>prefKeyCode</string>
+		<key>Title</key>
+		<string>Keyboard Shortcut</string>
+		<key>Type</key>
+		<string>TextField</string>
+	</dict>
 </array>
 </plist>

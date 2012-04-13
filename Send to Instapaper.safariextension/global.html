@@ -16,8 +16,6 @@
 	function grabLink(event) {
 		console.log(event.name);
 		if ( event.name === "getLink" ) {
-			// alert(encodeURI((event.message).replace('+', '+++')));
-			// url = encodeURI((event.message).replace('+', '+++'));
 			url = encodeURI(event.message);
 		}
 	}
@@ -25,7 +23,11 @@
 	function performCommand(event) {
 		if ( event.name === "keyboardShortcut" || event.command === "readLater" ) {
 			if ( event.name === "keyboardShortcut" ) {
-				url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
+				if ( event.message + 32 == safari.extension.settings.getItem("prefKeyCode").charCodeAt(0) ) {
+					url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
+				} else {
+					return false;
+				}
 			}
 			console.log("Sending to Instapaper...");
 			var rqst = new XMLHttpRequest();
