@@ -59,8 +59,8 @@
 		</dict>
 	</dict>
 	<key>Update Manifest URL</key>
-	<string>http://mdznr.com/safariextensions/manifest.plist</string>
+	<string>https://raw.github.com/mdznr/Instapaper/master/manifest.plist</string>
 	<key>Website</key>
-	<string>http://mdznr.com/safariextensions/</string>
+	<string>https://github.com/mdznr/Instapaper</string>
 </dict>
 </plist>
