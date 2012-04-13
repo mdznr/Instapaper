@@ -7,12 +7,12 @@
 		<dict>
 			<key>CFBundleIdentifier</key>
 			<string>com.mattzanchelli.sendToInstapaper</string>
+			<key>Developer Identifier</key>
+			<string>3SZ7MS7NXC</string>
 			<key>CFBundleShortVersionString</key>
 			<string>1.6</string>
 			<key>CFBundleVersion</key>
 			<string>16</string>
-			<key>Developer Identifier</key>
-			<string>3SZ7MS7NXC</string>
 			<key>URL</key>
 			<string>https://github.com/downloads/mdznr/Instapaper/sendToInstapaper.safariextz</string>
 		</dict>

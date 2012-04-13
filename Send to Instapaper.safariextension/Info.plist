@@ -9,7 +9,7 @@
 	<key>CFBundleDisplayName</key>
 	<string>Send to Instapaper</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.mattzanchelli.instapaper</string>
+	<string>com.mattzanchelli.sendToInstapaper</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleShortVersionString</key>
