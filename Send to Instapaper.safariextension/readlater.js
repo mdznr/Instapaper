@@ -30,7 +30,7 @@ function keyboardShortcut() {
 //	Create & Style results
 var results = document.createElement("div");
 results.setAttribute("id", "sendToInstapaperResults");
-document.body.insertBefore(results, document.body.firstChild);
+document.body.appendChild(results);
 
 //	Listen for results
 safari.self.addEventListener("message", displayResults, false);
