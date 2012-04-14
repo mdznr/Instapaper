@@ -1,9 +1,8 @@
 #sendToInstapaperResults {
-	display: none;
 	margin: 0 !important;
 	padding: 0 !important;
 	position: fixed;
-	top: 0px;
+	top: -50px;
 	left: 0px;
 	right: 0px;
 	text-align: center;
@@ -15,7 +14,7 @@
 		linear,
 		left bottom,
 		left top,
-		color-stop(0, rgba(30,92,155,.975)),
+		color-stop(0, rgba(30,92,155,.95)),
 		color-stop(1, rgba(52,121,191,.975))
 	) !important;
 	clear: none;
@@ -25,6 +24,7 @@
 	text-shadow: #2b598b 0 -1px 0;
 	vertical-align: middle !important;
 	box-shadow: 0px 0px 5px rgba(0,0,0,.75);
+	-webkit-transition: top .2s ease;
 }
 
 #sendToInstapaperResults.failed {
@@ -32,10 +32,11 @@
 		linear,
 		left bottom,
 		left top,
-		color-stop(0, rgb(153,31,31)),
-		color-stop(1, rgb(189,53,53))
+		color-stop(0, rgba(153,31,31,.95)),
+		color-stop(1, rgba(189,53,53,.975))
 	) !important;
 	border-bottom: 1px solid #5e1313;
 	border-top: 1px solid #b55959;
 	text-shadow: #8a2b2b 0 -1px 0;
 }
+
