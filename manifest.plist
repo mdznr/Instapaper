@@ -10,9 +10,9 @@
 			<key>Developer Identifier</key>
 			<string>3SZ7MS7NXC</string>
 			<key>CFBundleShortVersionString</key>
-			<string>1.7</string>
+			<string>1.71</string>
 			<key>CFBundleVersion</key>
-			<string>18</string>
+			<string>19</string>
 			<key>URL</key>
 			<string>https://raw.github.com/mdznr/Instapaper/master/sendToInstapaper.safariextz</string>
 		</dict>
