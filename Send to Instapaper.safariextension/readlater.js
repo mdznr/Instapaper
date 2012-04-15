@@ -62,5 +62,9 @@ function displayResults(response) {
 
 function hideResults() {
 	results.style.top = "-50px";
+	setTimeout( "clearClassName()", 500 );
+}
+
+function clearClassName() {
 	results.className = "";	//	Clear class
 }
