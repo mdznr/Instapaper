@@ -40,7 +40,7 @@ function displayResults(response) {
 	if (response.name === "displayResults" ) {
 		//	Handle different response codes here
 		results.style.top = "0px";	//	Reset display
-		results.innerHTML = "Saving...";
+		// results.innerHTML = "Saving...";
 		if ( response.message == 200 || response.message == 201 ) {
 			results.className = "success";
 			results.innerHTML = "Sent to Instapaper!";
@@ -62,4 +62,5 @@ function displayResults(response) {
 
 function hideResults() {
 	results.style.top = "-50px";
+	results.className = "";	//	Clear class
 }
