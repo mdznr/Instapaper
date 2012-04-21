@@ -16,6 +16,13 @@
 	vertical-align: middle !important;
 	-webkit-transition: top .2s ease !important;
 	text-decoration: none !important;
+	background-image: -webkit-gradient(
+		linear,
+		left bottom,
+		left top,
+		color-stop(0, rgba(126,126,126,.95)),
+		color-stop(1, rgba(97,97,97,.975))
+	) !important;
 }
 
 #sendToInstapaperResults.success {
@@ -45,4 +52,3 @@
 	text-shadow: #8a2b2b 0 -1px 0 !important;
 	box-shadow: 0px 0px 5px rgba(0,0,0,.75) !important;
 }
-

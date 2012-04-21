@@ -32,11 +32,11 @@
 	</dict>
 	<dict>
 		<key>DefaultValue</key>
-		<string>i</string>
+		<string>r</string>
 		<key>Key</key>
 		<string>prefKeyCode</string>
 		<key>Title</key>
-		<string>Keyboard Shortcut</string>
+		<string>Keyboard Shortcut ( Alt + __ )</string>
 		<key>Type</key>
 		<string>TextField</string>
 	</dict>
