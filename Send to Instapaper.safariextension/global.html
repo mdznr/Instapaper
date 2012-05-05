@@ -1,20 +1,46 @@
 <!DOCTYPE html>
 <html>
+<!--
+	Copyright (c) 2012, Matt Zanchelli
+	All rights reserved.
+
+	Redistribution and use in source and binary forms, with or without
+	modification, are permitted provided that the following conditions are met:
+		* Redistributions of source code must retain the above copyright
+		  notice, this list of conditions and the following disclaimer.
+		* Redistributions in binary form must reproduce the above copyright
+		  notice, this list of conditions and the following disclaimer in the
+		  documentation and/or other materials provided with the distribution.
+		* Neither the name of the <organization> nor the
+		  names of its contributors may be used to endorse or promote products
+		  derived from this software without specific prior written permission.
+
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+	DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+	DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+	(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+	LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+	ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
 <head>
 	<title>Send to Instapaper</title>
 	<script type="text/javascript" charset="utf-8">
 	
 	//	Known Bugs:
 	//	Hide menu item if not on link
-	//	Keyboard shortcut doesn't detect "Shift"
+	//	Keyboard shortcut doesn't detect "Shift" key
+	//		Therefore, even setting  capital letters in Prefs won't work
 	//	Results do not show "Sending..."
 	//	Sending too many links too quickly results in clear results bar
 	//	Wrong color/no response/wrong response on internet connection lost
 		
 	var url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
 	
-	function grabLink(event) {
-		console.log(event.name);
+	function getLink(event) {
 		if ( event.name === "getLink" ) {
 			url = encodeURI(event.message);
 		}
@@ -23,6 +49,7 @@
 	function performCommand(event) {
 		if ( event.name === "keyboardShortcut" || event.command === "readLater" ) {
 			if ( event.name === "keyboardShortcut" ) {
+				console.log( event.message );
 				if ( event.message + 32 == safari.extension.settings.getItem("prefKeyCode").charCodeAt(0) ) {
 					url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
 				} else {
@@ -32,13 +59,8 @@
 			console.log("Sending to Instapaper...");
 			var rqst = new XMLHttpRequest();
 			var username = encodeURIComponent(safari.extension.secureSettings.getItem("username"));
-			// alert(username);
-			// var username = "matt@thinksdifferent.com";
 			var password = encodeURIComponent(safari.extension.secureSettings.getItem("password"));
-			// alert(password);
-			// var password = "79ecdf3c86c46ef8";
 			console.log("https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url);
-			// url = url.replace(' ', '+');
 			rqst.open("GET", "https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+encodeURIComponent(url), true);
 			rqst.send(null);
 			rqst.onreadystatechange = function() {
@@ -63,7 +85,7 @@
 			// event.target.disabled = true;
 		}
 		else {
-			alert("hi");
+			// alert("hi");
 		}
 	}
 	
@@ -74,13 +96,13 @@
 		}
 	}
  
-// if event handlers are in the global HTML page, register with application:
-safari.application.addEventListener("command", performCommand, true);
-safari.application.addEventListener("validate", validateCommand, true);
-safari.application.addEventListener("message", performCommand, true);
-safari.application.addEventListener("message", disableItem, true);
-safari.application.addEventListener("message", grabLink, true);
-</script>
+	// if event handlers are in the global HTML page, register with application:
+	safari.application.addEventListener("command", performCommand, true);
+	safari.application.addEventListener("validate", validateCommand, true);
+	safari.application.addEventListener("message", performCommand, true);
+	safari.application.addEventListener("message", disableItem, true);
+	safari.application.addEventListener("message", getLink, true);
+	</script>
 </head>
 <body>
 </body>

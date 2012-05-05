@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<!--
+	Copyright (c) 2012, Matt Zanchelli
+	All rights reserved.
+	
+	Redistribution and use in source and binary forms, with or without
+	modification, are permitted provided that the following conditions are met:
+		* Redistributions of source code must retain the above copyright
+		  notice, this list of conditions and the following disclaimer.
+		* Redistributions in binary form must reproduce the above copyright
+		  notice, this list of conditions and the following disclaimer in the
+		  documentation and/or other materials provided with the distribution.
+		* Neither the name of the <organization> nor the
+		  names of its contributors may be used to endorse or promote products
+		  derived from this software without specific prior written permission.
+	
+	THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+	ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+	WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+	DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+	DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+	(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+	LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+	ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+	(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+	SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+-->
+<head>
+<title>Send to Instapaper</title>
+<script type="text/javascript" charset="utf-8">
+	
+	var url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
+	
+	function getLink(event)
+	{
+		if ( event.name === "getLink" ) {
+			url = encodeURI(event.message);
+		}
+	}
+	
+	function sendToInstapaper()
+	{
+		console.log("Sending to Instapaper...");
+		
+		var rqst = new XMLHttpRequest();
+		
+		var username = encodeURIComponent(safari.extension.secureSettings.getItem("username"));
+		var password = encodeURIComponent(safari.extension.secureSettings.getItem("password"));
+		
+		console.log("https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+url);
+		
+		rqst.open("GET", "https://www.instapaper.com/api/add?username="+username+"&password="+password+"&url="+encodeURIComponent(url), true);
+		rqst.send(null);
+		
+		rqst.onreadystatechange = function() {
+			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("displayResults", rqst.readyState);
+			if ( rqst.readyState == 4 ) {
+				if ( rqst.status == 200 || window.location.href.indexOf("http") == -1 ) {
+					console.log("Reponse: " + rqst.responseText);
+					safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("displayResults", rqst.responseText);
+				}
+				else {
+					alert("An error has occurred making the request");
+				}
+			}
+		};
+	}
+	
+	function keyboardShortcut(event)
+	{
+		if ( event.name === "keyboardShortcut" ) {
+			console.log( event.message );
+			if ( event.message + 32 == safari.extension.settings.getItem("prefKeyCode").charCodeAt(0) ) {
+				safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("displayDisplayBar", "keyboardShortcut");
+				url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
+				sendToInstapaper();
+			} else {
+				return false;
+			}
+		}
+	}
+		
+	function contextualMenu(event)
+	{
+		if ( event.command === "readLater" ) {
+			safari.application.activeBrowserWindow.activeTab.page.dispatchMessage("displayDisplayBar", "contextualMenu");
+			sendToInstapaper();
+		}
+	}
+	
+	safari.application.addEventListener("command", contextualMenu, true);
+	safari.application.addEventListener("message", getLink, true );
+	safari.application.addEventListener("message", keyboardShortcut, true);
+	
+</script>
+</head>
+<body>
+</body>
+</html>
