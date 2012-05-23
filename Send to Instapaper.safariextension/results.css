@@ -23,7 +23,11 @@
 		color-stop(0, rgba(126,126,126,.95)),
 		color-stop(1, rgba(97,97,97,.975))
 	) !important;
+<<<<<<< HEAD
 	opacity: 0 !important;
+=======
+	opacity: 0.0 !important;
+>>>>>>> 1e7eea14d810c0691a3b9f6b22f86a2b854bda9e
 }
 
 #sendToInstapaperResults.success {

@@ -40,7 +40,11 @@
 		
 	var url = encodeURI(safari.application.activeBrowserWindow.activeTab.url);
 	
+<<<<<<< HEAD
 	function getLink(event) {
+=======
+	function grabLink(event) {
+>>>>>>> 1e7eea14d810c0691a3b9f6b22f86a2b854bda9e
 		if ( event.name === "getLink" ) {
 			url = encodeURI(event.message);
 		}
@@ -101,7 +105,11 @@
 	safari.application.addEventListener("validate", validateCommand, true);
 	safari.application.addEventListener("message", performCommand, true);
 	safari.application.addEventListener("message", disableItem, true);
+<<<<<<< HEAD
 	safari.application.addEventListener("message", getLink, true);
+=======
+	safari.application.addEventListener("message", grabLink, true);
+>>>>>>> 1e7eea14d810c0691a3b9f6b22f86a2b854bda9e
 	</script>
 </head>
 <body>

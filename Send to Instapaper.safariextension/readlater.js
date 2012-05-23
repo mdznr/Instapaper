@@ -41,6 +41,7 @@ function displayBar(response)
 window.addEventListener("contextmenu", handleContextualMenu, false);
 
 //	Disable menu item if not a link?
+<<<<<<< HEAD
 function handleContextualMenu(event)
 {
 	console.log( "Contextual Menu in " + event.target.nodeName.toLowerCase() );
@@ -49,6 +50,16 @@ function handleContextualMenu(event)
 		// safari.self.tab.dispatchMessage("disable", true);
 		safari.self.tab.dispatchMessage( "getLink", document.URL );
 		console.log( "Getting: " + document.URL );
+=======
+function handleContextMenu(event) {
+	console.log("Contextual Menu");
+	console.log( event.target.nodeName.toLowerCase() );
+	if ( event.target.nodeName.toLowerCase() != "a" ) {
+		//	Get disabling to work and add on/off preference for this feature
+		// safari.self.tab.dispatchMessage("disable", true);
+		safari.self.tab.dispatchMessage("getLink", document.URL);
+		console.log(document.URL);
+>>>>>>> 1e7eea14d810c0691a3b9f6b22f86a2b854bda9e
 	} else {
 		safari.self.tab.dispatchMessage( "getLink", event.target.href );
 		console.log( "Getting: " + event.target.href );
@@ -59,9 +70,15 @@ function handleContextualMenu(event)
 window.addEventListener("keydown", keyboardShortcut, false);
 
 //	Execute command on keyboard shortcut
+<<<<<<< HEAD
 function keyboardShortcut()
 {
 	console.log("Keyboard: " + event.keyCode);
+=======
+function keyboardShortcut() {
+	console.log("Keyboard Shorcut");
+	console.log(event.keyCode);
+>>>>>>> 1e7eea14d810c0691a3b9f6b22f86a2b854bda9e
 	if ( event.target.nodeName.toLowerCase() !== "input" && event.altKey ) {
 		safari.self.tab.dispatchMessage("keyboardShortcut", event.keyCode);
 	}
@@ -71,6 +88,7 @@ function keyboardShortcut()
 safari.self.addEventListener("message", displayResults, false);
 
 //	Display results
+<<<<<<< HEAD
 function displayResults(response)
 {
 	if ( response.name === "displayResults" ) {
@@ -79,6 +97,14 @@ function displayResults(response)
 		var text = "Saving...";
 
 		// Handle different response codes here
+=======
+function displayResults(response) {
+	if (response.name === "displayResults" ) {
+		// Handle different response codes here
+		results.style.top = "0px";	//	Reset display
+		results.innerHTML = "Saving...";
+		// console.log(response.message);
+>>>>>>> 1e7eea14d810c0691a3b9f6b22f86a2b854bda9e
 		if ( response.message == 200 || response.message == 201 ) {
 			results.className = "success";
 			text = "Sent to Instapaper!";
@@ -107,6 +133,7 @@ function displayResults(response)
 	}
 }
 
+<<<<<<< HEAD
 safari.self.addEventListener("message", displayDisplayBar, false);
 
 function displayDisplayBar(response)
@@ -115,4 +142,9 @@ function displayDisplayBar(response)
 		displayBar("Saving...");
 		console.log("saving...");
 	}
+=======
+function hideResults() {
+	results.style.top = "-50px";
+	setTimeout( "results.className = ''", 500 );
+>>>>>>> 1e7eea14d810c0691a3b9f6b22f86a2b854bda9e
 }
